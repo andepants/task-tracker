@@ -26,7 +26,7 @@ export default function Home() {
       <Link
         href={{
           pathname: '/tasks',
-          query: { user: user },
+          query: { user: user.toLowerCase() },
         }}
         className="flex justify-center"
       >

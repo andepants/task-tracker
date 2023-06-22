@@ -15,6 +15,7 @@ export default function Tasks() {
   const [description, setDescription] = useState('')
   const [status, setStatus] = useState('')
   const [dueDate, setDueDate] = useState<any>(new Date())
+  const [currentUser, setCurrentUser] = useState<any>('')
 
   const readAll = async () => {
     console.log('userId', user)
@@ -28,8 +29,47 @@ export default function Tasks() {
   }
 
   useEffect(() => {
-    readAll();
+    console.log('currentUser right before createNewUser', currentUser)
+    if (currentUser === undefined || currentUser === null) {
+      console.log('inside if statement', currentUser)
+      const createNewUser = async () => {
+        const res = await fetch('http://localhost:3000/api/createNewUser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ user: user })
+        })
+        const data = await res.json();
+        console.log(data, 'data from createNewUser');
+        setCurrentUser(data?.id);
+      }
+      createNewUser();
+    } else {
+      console.log('currentUser', currentUser)
+      // readAll(); with the userId
+    }
+  }, [currentUser])
+
+  useEffect(() => {
+    const retrieveUserId = async () => {
+      const res = await fetch('http://localhost:3000/api/getUserId', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user: user })
+      })
+      const data = await res.json();
+      console.log(data, 'data from retrieveUserId');
+      setCurrentUser(data?.id);
+    }
+    retrieveUserId();
   }, [])
+
+  // useEffect(() => {
+  //   readAll();
+  // }, [])
 
   const insertData = async (e : FormEvent) => {
     e.preventDefault();
