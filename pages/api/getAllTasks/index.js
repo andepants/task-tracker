@@ -7,6 +7,6 @@ export default async function handle(req, res) {
   console.log(req.method, 'req.method');
 
   const tasks = await prisma.task.findMany()
-  console.log('tasks', tasks)
+  // console.log('tasks', tasks)
   res.json(tasks);
 }

@@ -23,4 +23,5 @@ model Task {
   dueDate DateTime
   user      User?    @relation(fields: [userId], references: [id])
   userId    Int?
+  username String?
 }
