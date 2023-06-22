@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 export default function Task({eachTask, editTask} : {editTask: any, eachTask: any}) {
-  console.log(eachTask, 'eachTask from task.tsx')
   const [modalTitle, setModalTitle] = useState('')
   const [modalDescription, setModalDescription] = useState('')
   const [modalStatus, setModalStatus] = useState('')
