@@ -18,20 +18,22 @@ export default function Tasks() {
   const [currentUser, setCurrentUser] = useState<any>('')
 
   const readAll = async () => {
-    console.log('userId', user)
     const res = await fetch('http://localhost:3000/api/getAllTasks', {
-      method: 'GET',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 'id': currentUser.id })
     })
     const data = await res.json();
-    console.log(data, 'data from readAll');
-
     setAllTasks(data);
   }
 
   useEffect(() => {
-    console.log('currentUser right before createNewUser', currentUser)
+    if (currentUser === '') {
+      return;
+    }
     if (currentUser === undefined || currentUser === null) {
-      console.log('inside if statement', currentUser)
       const createNewUser = async () => {
         const res = await fetch('http://localhost:3000/api/createNewUser', {
           method: 'POST',
@@ -41,13 +43,11 @@ export default function Tasks() {
           body: JSON.stringify({ user: user })
         })
         const data = await res.json();
-        console.log(data, 'data from createNewUser');
-        setCurrentUser(data?.id);
+        setCurrentUser(data);
       }
       createNewUser();
     } else {
-      console.log('currentUser', currentUser)
-      // readAll(); with the userId
+      readAll();
     }
   }, [currentUser])
 
@@ -61,15 +61,13 @@ export default function Tasks() {
         body: JSON.stringify({ user: user })
       })
       const data = await res.json();
-      console.log(data, 'data from retrieveUserId');
-      setCurrentUser(data?.id);
+      setCurrentUser(data);
     }
-    retrieveUserId();
+    if (user !== '') {
+      retrieveUserId();
+    }
   }, [])
 
-  // useEffect(() => {
-  //   readAll();
-  // }, [])
 
   const insertData = async (e : FormEvent) => {
     e.preventDefault();
@@ -78,9 +76,8 @@ export default function Tasks() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title: title, description: description, status: status, dueDate: dueDate, user: user })
+      body: JSON.stringify({ title: title, description: description, status: status, dueDate: dueDate, userId: currentUser.id})
     })
-    console.log(res, 'res from insertData');
     readAll();
   }
 
