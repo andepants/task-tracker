@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Task({eachTask, editTask} : {editTask: any, eachTask: any}) {
+export default function Task({eachTask, editTask, deleteTask} : {editTask: any, eachTask: any, deleteTask: any}) {
   const [modalTitle, setModalTitle] = useState('')
   const [modalDescription, setModalDescription] = useState('')
   const [modalStatus, setModalStatus] = useState('')
@@ -15,20 +15,24 @@ export default function Task({eachTask, editTask} : {editTask: any, eachTask: an
         <h1 className="border-2 border-gray-500 m-2 p-2 rounded">{eachTask.status}</h1>
         <h1 className="border-2 border-gray-500 m-2 p-2 rounded">{eachTask.dueDate}</h1>
         <dialog id={eachTask.id} open={isModalOpen}>
-          <form onSubmit={(e) => editTask(e)}>
+          <form onSubmit={(e) => {
+                editTask(e, eachTask.id, modalTitle, modalDescription, modalStatus, modalDueDate)
+                setIsModalOpen(false)
+              }}>
             <input type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} placeholder="Title" className="border-2 border-gray-500 m-2 p-2 rounded" />
             <input type="text" value={modalDescription} onChange={(e) => setModalDescription(e.target.value)} placeholder="Description" className="border-2 border-gray-500 m-2 p-2 rounded" />
             <input type="text" value={modalStatus} onChange={(e) => setModalStatus(e.target.value)} placeholder="Status" className="border-2 border-gray-500 m-2 p-2 rounded" />
             <input type="text" value={modalDueDate} onChange={(e) => setModalDueDate(e.target.value)} placeholder="Due Date" className="border-2 border-gray-500 m-2 p-2 rounded" />
             <button
               className="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setIsModalOpen(false)}
+              type="submit"
             >
               Edit
             </button>
             <button
               className="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => setIsModalOpen(false)}
+              type="button"
             >
               Cancel
             </button>
@@ -42,7 +46,7 @@ export default function Task({eachTask, editTask} : {editTask: any, eachTask: an
         </button>
         <button
           className="flex justify-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          // onClick={() => setIsModalOpen(true)}
+          onClick={() => deleteTask(eachTask.id)}
         >
           Delete Task
         </button>

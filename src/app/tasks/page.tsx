@@ -87,26 +87,28 @@ export default function Tasks() {
     readAll();
   }
 
-  const editTask = async (e : FormEvent) => {
+  const editTask = async (e: any, id: any, title: string, description: string, status: string, dueDate: Date) => {
+    console.log('inside edit task', id, title, description, status, dueDate)
     e.preventDefault();
     const res = await fetch('http://localhost:3000/api/editTask', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title: title, description: description, status: status, dueDate: dueDate })
+      body: JSON.stringify({ id: id, title: title, description: description, status: status, dueDate: dueDate })
     })
+    readAll();
   }
 
-  const deleteTask = async (e : FormEvent) => {
-    e.preventDefault();
+  const deleteTask = async (id : any) => {
     const res = await fetch('http://localhost:3000/api/deleteTask', {
-      method: 'DELETE',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title: title, description: description, status: status, dueDate: dueDate })
+      body: JSON.stringify({ id: id })
     })
+    readAll();
   }
 
 
@@ -125,7 +127,7 @@ export default function Tasks() {
       </form>
 
       {allTasks.map((eachTask : any, index: number) => (
-        <Task key={index} eachTask={eachTask} editTask={editTask}/>
+        <Task key={index} eachTask={eachTask} editTask={editTask} deleteTask={deleteTask} />
       ))}
 
       <Link href="/" className="flex justify-center">
