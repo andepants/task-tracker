@@ -18,6 +18,7 @@ export default function Tasks() {
   const [currentUser, setCurrentUser] = useState<any>('')
 
   const readAll = async () => {
+    console.log('inside read all', currentUser.id)
     const res = await fetch('http://localhost:3000/api/getAllTasks', {
       method: 'POST',
       headers: {
@@ -26,6 +27,7 @@ export default function Tasks() {
       body: JSON.stringify({ 'id': currentUser.id })
     })
     const data = await res.json();
+    console.log('data', data)
     setAllTasks(data);
   }
 
@@ -33,7 +35,8 @@ export default function Tasks() {
     if (currentUser === '') {
       return;
     }
-    if (currentUser === undefined || currentUser === null) {
+    console.log('currentUser', currentUser)
+    if (currentUser === undefined || currentUser === null || currentUser.error) {
       const createNewUser = async () => {
         const res = await fetch('http://localhost:3000/api/createNewUser', {
           method: 'POST',
@@ -53,6 +56,7 @@ export default function Tasks() {
 
   useEffect(() => {
     const retrieveUserId = async () => {
+      console.log('inside retrieveUserId')
       const res = await fetch('http://localhost:3000/api/getUserId', {
         method: 'POST',
         headers: {
@@ -61,6 +65,7 @@ export default function Tasks() {
         body: JSON.stringify({ user: user })
       })
       const data = await res.json();
+      console.log('data', data)
       setCurrentUser(data);
     }
     if (user !== '') {
@@ -70,6 +75,7 @@ export default function Tasks() {
 
 
   const insertData = async (e : FormEvent) => {
+    console.log('inside insert data')
     e.preventDefault();
     const res = await fetch('http://localhost:3000/api/postTask', {
       method: 'POST',
