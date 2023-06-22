@@ -19,7 +19,7 @@ export default function Tasks() {
   const [sortBy, setSortBy] = useState({ value: 'title_asc', label: 'Sort By' })
 
 
-  const options : { value: string; label: string; }[] = [
+  const options: any = [
     { value: 'Not Started', label: 'Not Started' },
     { value: 'Pending', label: 'Pending' },
     { value: 'On Hold', label: 'On Hold' },
@@ -215,7 +215,7 @@ export default function Tasks() {
       <form className="flex justify-center" onSubmit={(e) => insertData(e)}>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" className="border-2 border-gray-500 m-2 p-2 rounded" />
         <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" className="border-2 border-gray-500 m-2 p-2 rounded" />
-        <Select options={options} placeholder={status} value={status} className="m-2 p-2 rounded" onChange={(e) => handleSelect(e.value)}/>
+        <Select options={options} placeholder={status} value={status} className="m-2 p-2 rounded" onChange={(e: any) => handleSelect(e.value)}/>
         <input type="text" value={dueDate} onChange={(e) => setDueDate(e.target.value)} placeholder="Due Date" className="border-2 border-gray-500 m-2 p-2 rounded" />
         <button className="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Add Task
