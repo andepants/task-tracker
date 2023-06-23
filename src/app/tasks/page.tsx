@@ -40,8 +40,10 @@ export default function Tasks() {
     console.log('inside read all', currentUser.id)
     const res = await fetch('http://localhost:3000/api/getAllTasks', {
       method: 'POST',
+
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ 'id': currentUser.id })
     })
@@ -60,7 +62,8 @@ export default function Tasks() {
         const res = await fetch('http://localhost:3000/api/createNewUser', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
           },
           body: JSON.stringify({ user: user })
         })
@@ -79,7 +82,8 @@ export default function Tasks() {
       const res = await fetch('http://localhost:3000/api/getUserId', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({ user: user })
       })
@@ -99,7 +103,8 @@ export default function Tasks() {
     const res = await fetch('http://localhost:3000/api/postTask', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ title: title, description: description, status: status, dueDate: dueDate, userId: currentUser.id})
     })
@@ -115,7 +120,8 @@ export default function Tasks() {
     const res = await fetch('http://localhost:3000/api/editTask', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ id: id, title: title, description: description, status: status, dueDate: dueDate })
     })
@@ -126,7 +132,8 @@ export default function Tasks() {
     const res = await fetch('http://localhost:3000/api/deleteTask', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ id: id })
     })

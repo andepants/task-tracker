@@ -34,11 +34,6 @@ export default function Home() {
           Take me to my tasks
         </button>
         </Link>
-      <Link href="/login" className="flex justify-center">
-        <button className="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Login
-        </button>
-      </Link>
     </main>
   )
 }
