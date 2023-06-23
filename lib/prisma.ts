@@ -4,7 +4,7 @@ const prisma = new PrismaClient({
   datasources: {
     db: {
       provider: 'postgresql',
-      url: process.env.POSTGRES_URL,
+      url: process.env.DATABAS_URL,
     },
   },
 });
